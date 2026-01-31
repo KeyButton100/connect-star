@@ -1,4 +1,4 @@
-import pgzrun, pyautogui, random
+import pgzrun, pyautogui, random, time
 WIDTH, HEIGHT= pyautogui.size()
 TITLE="Connect the Power Ups(From 1)"
 mario_powers = [
@@ -19,8 +19,11 @@ for i in range(totalpower):
     A.pos=random.randint(50, WIDTH-50 ), random.randint(50, HEIGHT-50)
     powers.append(A)
 
+start=time.time()
+totaltime= 0
 
 def draw():
+    global totaltime
     screen.clear()
     screen.blit("space.jpg", (0,0))
     for i,v in enumerate (powers):
@@ -29,9 +32,11 @@ def draw():
     for i in lines:
         print(i)
         screen.draw.line(i[0], i[1], 'white')
-        
-def update():
-    pass
+    if nextpower<totalpower:
+        totaltime=time.time()-start
+    else:
+        screen.draw.text(f"Great! You have connected all {nextpower} stars." ,(50,100))
+    screen.draw.text(f"Time={round(totaltime, 2)}" ,(60,50) )
 def on_mouse_down(pos):
     global nextpower, lines
     if nextpower<totalpower:
